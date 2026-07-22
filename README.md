@@ -30,3 +30,29 @@ git clone https://github.com/rajneeshkumarroy/flyrank-frontend-capstone.git
 
 cd flyrank-frontend-capstone
 ```
+
+## Run Locally
+
+Clone the project
+
+```bash
+git clone https://github.com/rajneeshkumarroy/flyrank-frontend-capstone.git
+```
+
+Go to the project directory
+
+```bash
+cd flyrank-frontend-capstone
+```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Start the development server
+
+```bash
+npm run dev
+```
