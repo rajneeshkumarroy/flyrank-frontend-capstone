@@ -28,3 +28,10 @@ Use GitHub Copilot or another AI coding assistant for:
 - Code suggestions
 - Refactoring
 - Debugging
+
+
+## Additional Rules
+
+- Keep components reusable.
+- Write meaningful commit messages.
+- Keep the project well documented.
