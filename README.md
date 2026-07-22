@@ -21,3 +21,12 @@ Week 1 - Environment Setup
 - Learn AI-assisted frontend development.
 - Follow Git best practices.
 - Use Conventional Commits.
+
+
+## Installation
+
+```bash
+git clone https://github.com/rajneeshkumarroy/flyrank-frontend-capstone.git
+
+cd flyrank-frontend-capstone
+```
