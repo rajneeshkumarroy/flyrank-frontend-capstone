@@ -1,0 +1,143 @@
+.settings-page {
+  display: grid;
+  place-items: center;
+  padding: 48px 20px;
+}
+
+.settings-card {
+  width: min(720px, 100%);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: var(--shadow);
+}
+
+.settings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.status-pill {
+  background: var(--accent-bg);
+  color: var(--accent);
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.settings-form {
+  display: grid;
+  gap: 20px;
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.field,
+.language-group,
+.checkbox-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field span,
+.language-group legend {
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.field input,
+.field select {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font: inherit;
+  background: var(--bg);
+  color: var(--text-h);
+}
+
+.field input:focus,
+.field select:focus {
+  outline: 2px solid var(--accent-border);
+  outline-offset: 2px;
+}
+
+.checkbox-row {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 0 0;
+}
+
+.language-group {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  margin: 0;
+}
+
+.language-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.save-button {
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent), #7c3aed);
+  color: white;
+  padding: 12px 18px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.save-message {
+  color: #0f766e;
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .field-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-card {
+    padding: 20px;
+  }
+
+  .settings-header,
+  .form-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
