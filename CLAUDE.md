@@ -35,3 +35,10 @@ Use GitHub Copilot or another AI coding assistant for:
 - Keep components reusable.
 - Write meaningful commit messages.
 - Keep the project well documented.
+
+
+## Project-Specific Rules
+
+- Always use controlled React form components.
+- Validate user input before allowing form submission.
+- Display clear validation error messages below the corresponding field.
