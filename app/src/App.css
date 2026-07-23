@@ -1,0 +1,141 @@
+:root {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #1f2937;
+  background: #f3f4f6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.page-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: linear-gradient(135deg, #e0f2fe, #f8fafc);
+}
+
+.settings-card {
+  width: min(100%, 720px);
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.12);
+  padding: 24px;
+}
+
+.settings-card h1 {
+  margin: 0 0 8px;
+}
+
+.subtitle {
+  margin: 0 0 24px;
+  color: #4b5563;
+}
+
+.settings-form {
+  display: grid;
+  gap: 18px;
+}
+
+.field-group {
+  display: grid;
+  gap: 8px;
+}
+
+label,
+legend {
+  font-weight: 600;
+}
+
+input,
+select,
+button {
+  font: inherit;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password'],
+select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: #fff;
+}
+
+input:focus,
+select:focus,
+button:focus {
+  outline: 3px solid rgba(14, 116, 144, 0.25);
+  outline-offset: 2px;
+}
+
+.checkbox-field {
+  align-items: start;
+}
+
+.checkbox-label,
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.radio-group {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.radio-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.error-message {
+  margin: 0;
+  color: #b91c1c;
+  font-size: 0.92rem;
+}
+
+.success-message {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #dcfce7;
+  color: #166534;
+  font-weight: 600;
+}
+
+.save-button {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 16px;
+  background: #0f766e;
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.save-button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .settings-card {
+    padding: 18px;
+  }
+
+  .radio-options {
+    grid-template-columns: 1fr;
+  }
+}
