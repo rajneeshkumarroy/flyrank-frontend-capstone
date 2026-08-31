@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, lazy, Suspense } from 'react';
+import ShaderHero from './components/ShaderHero/ShaderHero';
 import Chat from './components/Chat';
 import ProductStudioSkeleton from './components/ProductStudio/ProductStudioSkeleton';
 import './App.css';
@@ -268,6 +269,9 @@ export default function App() {
           <h1 className="brand-name">FlyRank Engineering Capstone</h1>
         </div>
         <nav className="nav-links" aria-label="Capstone Modules">
+          <a href="#hero-section" className="nav-link">
+            Hero
+          </a>
           <a href="#3d-studio" className="nav-link">
             3D Studio
           </a>
@@ -279,6 +283,11 @@ export default function App() {
           </a>
         </nav>
       </header>
+
+      {/* FE-AA3: Signature Fullscreen Shader Hero */}
+      <div className="app-module-wrapper">
+        <ShaderHero />
+      </div>
 
       {/* FE-AA2: 3D Product Studio */}
       <div id="3d-studio" className="app-module-wrapper">
