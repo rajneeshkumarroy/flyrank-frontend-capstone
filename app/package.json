@@ -14,9 +14,12 @@
   "dependencies": {
     "@ai-sdk/google": "^4.0.43",
     "@ai-sdk/react": "^4.0.66",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
     "ai": "^7.0.63",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "three": "^0.169.0",
     "zod": "^4.5.4"
   },
   "devDependencies": {

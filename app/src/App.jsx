@@ -1,6 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import Chat from './components/Chat';
+import ProductStudioSkeleton from './components/ProductStudio/ProductStudioSkeleton';
 import './App.css';
+
+const ProductStudio = lazy(() => import('./components/ProductStudio/ProductStudio'));
 
 /* ==================================================
    FE-AA1 — BUTTONS WITH A BRAIN
@@ -98,7 +101,7 @@ function MotionButton({ label = 'Send message' }) {
   };
 
   return (
-    <div className="motion-demo">
+    <div className="motion-demo" id="motion-demo-section">
       <div className="motion-demo-card">
         <div className="motion-demo-header">
           <div>
@@ -250,9 +253,39 @@ function MotionButton({ label = 'Send message' }) {
 export default function App() {
   return (
     <main className="app">
+      {/* Studio Top Navigation Header */}
+      <header className="app-top-nav" aria-label="FlyRank Studio Navigation">
+        <div className="nav-brand">
+          <span className="brand-dot" aria-hidden="true" />
+          <span className="brand-name">FlyRank Engineering Capstone</span>
+        </div>
+        <nav className="nav-links" aria-label="Capstone Modules">
+          <a href="#3d-studio" className="nav-link">
+            3D Studio
+          </a>
+          <a href="#chat-assistant" className="nav-link">
+            AI Assistant
+          </a>
+          <a href="#motion-demo-section" className="nav-link">
+            Micro-Interactions
+          </a>
+        </nav>
+      </header>
+
+      {/* FE-AA2: 3D Product Studio */}
+      <div id="3d-studio" className="app-module-wrapper">
+        <Suspense fallback={<ProductStudioSkeleton />}>
+          <ProductStudio />
+        </Suspense>
+      </div>
+
+      {/* FE-AA1: Buttons with a Brain */}
       <MotionButton label="Send message" />
 
-      <Chat />
+      {/* FE-08 / FE-09: AI Assistant */}
+      <div id="chat-assistant" className="app-module-wrapper">
+        <Chat />
+      </div>
     </main>
   );
 }
