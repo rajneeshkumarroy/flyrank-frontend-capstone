@@ -47,7 +47,10 @@ Never reveal API keys or private configuration.
 const MODEL = 'gemini-2.5-flash';
 
 export default async function handler(req, res) {
-  // Only POST requests are allowed.
+  // --------------------------------------------------
+  // 1. Only POST requests are allowed
+  // --------------------------------------------------
+
   if (req.method !== 'POST') {
     res.statusCode = 405;
     res.setHeader('Content-Type', 'application/json');
@@ -62,47 +65,106 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Read the incoming JSON request body.
-    const body = await new Promise((resolve, reject) => {
-      let data = '';
+    // --------------------------------------------------
+    // 2. Read request body
+    // --------------------------------------------------
 
-      req.on('data', (chunk) => {
-        data += chunk;
-      });
+    let body = req.body;
 
-      req.on('end', () => {
-        try {
-          resolve(JSON.parse(data));
-        } catch (error) {
-          reject(error);
-        }
-      });
+    if (typeof body === 'string') {
+      try {
+        body = JSON.parse(body);
+      } catch {
+        body = {};
+      }
+    }
 
-      req.on('error', reject);
-    });
+    body = body || {};
 
-    const messages = body.messages || [];
+    const messages = body.messages;
+    const testMode = body.testMode;
 
-    // Stream the Gemini response and allow tool execution.
+    // --------------------------------------------------
+    // 3. Validate messages
+    // --------------------------------------------------
+
+    if (!Array.isArray(messages) || messages.length === 0) {
+      res.statusCode = 400;
+      res.setHeader('Content-Type', 'application/json');
+
+      res.end(
+        JSON.stringify({
+          error: 'Please provide at least one message.',
+        })
+      );
+
+      return;
+    }
+
+    // --------------------------------------------------
+    // 4. FE-08 SABOTAGE MODES
+    // --------------------------------------------------
+
+    // Simulate normal server/API failure
+    if (testMode === 'error') {
+      throw new Error('FE-08 simulated server failure');
+    }
+
+    // Simulate rate limiting
+    if (testMode === 'rate-limit') {
+      res.statusCode = 429;
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Retry-After', '5');
+
+      res.end(
+        JSON.stringify({
+          error: 'Too many requests. Please try again shortly.',
+        })
+      );
+
+      return;
+    }
+
+    // --------------------------------------------------
+    // 5. Convert messages for AI SDK
+    // --------------------------------------------------
+
+    const modelMessages =
+      await convertToModelMessages(messages);
+
+    // --------------------------------------------------
+    // 6. Create Gemini streaming response
+    // --------------------------------------------------
+
     const result = streamText({
       model: google(MODEL),
 
       system: SYSTEM_PROMPT,
 
-      messages: await convertToModelMessages(messages),
+      messages: modelMessages,
 
       tools: {
         analyzeFrontendQuestion,
       },
 
-      // Allows the model to call the tool and then continue
-      // with a final response.
       stopWhen: stepCountIs(3),
     });
 
-    // Convert the result into the UI message stream format
-    // expected by useChat().
-    const response = result.toUIMessageStreamResponse();
+    // --------------------------------------------------
+    // 7. Convert to UI message stream
+    // --------------------------------------------------
+
+    const response = result.toUIMessageStreamResponse({
+      onError: (error) => {
+        console.error('AI stream error:', error);
+
+        return 'The AI response was interrupted. Please try again.';
+      },
+    });
+
+    // --------------------------------------------------
+    // 8. Forward response headers
+    // --------------------------------------------------
 
     res.statusCode = response.status || 200;
 
@@ -110,32 +172,67 @@ export default async function handler(req, res) {
       res.setHeader(key, value);
     });
 
-    const reader = response.body.getReader();
+    // --------------------------------------------------
+    // 9. Read AI stream
+    // --------------------------------------------------
 
-    // Forward the streamed response to the browser.
-    const pump = async () => {
-      try {
-        const { done, value } = await reader.read();
+    const reader = response.body?.getReader();
 
-        if (done) {
-          res.end();
-          return;
-        }
+    if (!reader) {
+      throw new Error('AI response stream is unavailable.');
+    }
 
-        res.write(Buffer.from(value));
+    let chunkCount = 0;
 
-        await pump();
-      } catch (error) {
-        console.error('Streaming error:', error);
+    // --------------------------------------------------
+    // 10. Forward streamed chunks
+    // --------------------------------------------------
 
-        if (!res.writableEnded) {
-          res.end();
-        }
+    while (true) {
+      const { done, value } = await reader.read();
+
+      if (done) {
+        break;
       }
-    };
 
-    await pump();
+      chunkCount++;
+
+      res.write(Buffer.from(value));
+
+      // ------------------------------------------------
+      // FE-08 MID-STREAM FAILURE
+      // ------------------------------------------------
+      // Allow several chunks to reach the browser first.
+      // Then intentionally destroy the connection.
+      // ------------------------------------------------
+
+      if (testMode === 'mid-stream' && chunkCount >= 5) {
+        console.error(
+          'FE-08: Simulating mid-stream failure.'
+        );
+
+        await new Promise((resolve) =>
+          setTimeout(resolve, 300)
+        );
+
+        res.destroy();
+
+        return;
+      }
+    }
+
+    // --------------------------------------------------
+    // 11. Finish response
+    // --------------------------------------------------
+
+    if (!res.writableEnded) {
+      res.end();
+    }
   } catch (error) {
+    // --------------------------------------------------
+    // 12. Global API error handling
+    // --------------------------------------------------
+
     console.error('Chat API error:', error);
 
     if (!res.headersSent) {
@@ -144,9 +241,11 @@ export default async function handler(req, res) {
 
       res.end(
         JSON.stringify({
-          error: 'Failed to generate AI response',
+          error: 'Failed to generate AI response.',
         })
       );
+    } else if (!res.writableEnded) {
+      res.end();
     }
   }
 }

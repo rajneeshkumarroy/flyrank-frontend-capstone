@@ -311,3 +311,234 @@ textarea {
     font-size: 16px;
   }
 }
+
+
+/* ================================
+   FE-08 EMPTY STATE
+================================ */
+
+.chat-empty {
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 24px;
+}
+
+.empty-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eef5f3;
+  color: #168266;
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.chat-empty h3 {
+  margin: 0 0 10px;
+  font-size: 24px;
+}
+
+.chat-empty p {
+  max-width: 560px;
+  margin: 0 auto 24px;
+  color: #667b80;
+  line-height: 1.6;
+}
+
+.suggestion-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.suggestion-button {
+  border: 1px solid #d5e0de;
+  background: #ffffff;
+  color: #17363a;
+  border-radius: 999px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.suggestion-button:hover {
+  background: #eef7f4;
+  border-color: #9fc8bb;
+  transform: translateY(-1px);
+}
+
+.suggestion-button:focus-visible {
+  outline: 3px solid rgba(22, 130, 102, 0.25);
+  outline-offset: 2px;
+}
+
+
+/* ================================
+   FE-08 ERROR STATE
+================================ */
+
+.chat-error {
+  display: flex;
+  gap: 14px;
+  margin: 20px 0;
+  padding: 18px;
+  border: 1px solid #e0d8d2;
+  border-radius: 14px;
+  background: #faf8f6;
+}
+
+.error-icon {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eee8e3;
+  color: #725d4e;
+  font-weight: 700;
+}
+
+.error-content {
+  min-width: 0;
+}
+
+.error-content h3 {
+  margin: 4px 0 6px;
+}
+
+.error-content p {
+  margin: 0 0 14px;
+  color: #667b80;
+  line-height: 1.5;
+}
+
+.retry-button {
+  border: 0;
+  border-radius: 8px;
+  padding: 9px 16px;
+  background: #17363a;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.retry-button:hover {
+  opacity: 0.9;
+}
+
+.retry-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* ================================
+   FE-08 THINKING STATE
+================================ */
+
+.thinking-indicator {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 0;
+}
+
+.thinking-indicator span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #8da5a2;
+  animation: thinkingPulse 1.2s infinite ease-in-out;
+}
+
+.thinking-indicator span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.thinking-indicator span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes thinkingPulse {
+  0%,
+  60%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+
+/* ================================
+   MOBILE SAFETY
+================================ */
+
+@media (max-width: 700px) {
+  .chat-header {
+    padding: 24px 20px;
+  }
+
+  .chat-header h2 {
+    font-size: 28px;
+  }
+
+  .chat-header p {
+    font-size: 15px;
+  }
+
+  .chat-messages {
+    padding: 20px 16px;
+  }
+
+  .chat-input-form {
+    padding: 12px 14px;
+    gap: 8px;
+  }
+
+  .chat-input-form textarea {
+    min-width: 0;
+    font-size: 16px;
+  }
+
+  .send-button,
+  .stop-button {
+    flex-shrink: 0;
+    padding: 12px 16px;
+  }
+
+  .suggestion-list {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .suggestion-button {
+    width: 100%;
+  }
+
+  .chat-empty {
+    min-height: 300px;
+    padding: 32px 16px;
+  }
+
+  .chat-error {
+    margin: 16px 0;
+  }
+}
