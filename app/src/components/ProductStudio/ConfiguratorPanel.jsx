@@ -49,9 +49,9 @@ export default function ConfiguratorPanel({
 
       {/* ================= COLOR PRESETS ================= */}
       <div className="control-group">
-        <label className="control-label" id="color-palette-label">
+        <span className="control-label" id="color-palette-label">
           Color Finish
-        </label>
+        </span>
         <div
           className="color-preset-grid"
           role="radiogroup"
@@ -118,9 +118,6 @@ export default function ConfiguratorPanel({
             step="0.05"
             value={metalness}
             onChange={(e) => setMetalness(parseFloat(e.target.value))}
-            aria-valuemin="0"
-            aria-valuemax="100"
-            aria-valuenow={Math.round(metalness * 100)}
             aria-label="Metalness percentage"
             className="config-slider"
           />
@@ -142,9 +139,6 @@ export default function ConfiguratorPanel({
             step="0.05"
             value={roughness}
             onChange={(e) => setRoughness(parseFloat(e.target.value))}
-            aria-valuemin="5"
-            aria-valuemax="100"
-            aria-valuenow={Math.round(roughness * 100)}
             aria-label="Roughness percentage"
             className="config-slider"
           />
@@ -166,9 +160,6 @@ export default function ConfiguratorPanel({
             step="0.1"
             value={emissiveIntensity}
             onChange={(e) => setEmissiveIntensity(parseFloat(e.target.value))}
-            aria-valuemin="0"
-            aria-valuemax="100"
-            aria-valuenow={Math.round((emissiveIntensity / 2) * 100)}
             aria-label="Core Emissive Glow intensity"
             className="config-slider"
           />

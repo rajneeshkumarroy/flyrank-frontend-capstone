@@ -160,7 +160,6 @@ export default function MotionSendButton({
       className={`motion-send-button motion-state-${state}`}
       onClick={state === STATES.ERROR ? handleSend : handleSend}
       disabled={state === STATES.LOADING}
-      aria-live="polite"
       aria-label={
         state === STATES.LOADING
           ? 'Sending message'

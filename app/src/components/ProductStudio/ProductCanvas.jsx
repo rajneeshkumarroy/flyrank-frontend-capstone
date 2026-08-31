@@ -63,7 +63,12 @@ export default function ProductCanvas({
   resetTrigger,
 }) {
   return (
-    <div className="canvas-container" tabIndex={0} aria-label="3D Interactive Product Canvas">
+    <div
+      className="canvas-container"
+      role="region"
+      tabIndex={0}
+      aria-label="3D Interactive Product Canvas"
+    >
       <Canvas
         camera={{ position: [0, 0.6, 3.2], fov: 45 }}
         dpr={[1, 2]}

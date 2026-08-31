@@ -187,6 +187,7 @@ export default function Chat() {
       <div
         ref={messagesContainerRef}
         className="chat-messages"
+        role="log"
         onScroll={handleScroll}
         aria-live="polite"
         aria-label="Conversation"
@@ -286,15 +287,13 @@ export default function Chat() {
         {status === 'submitted' && (
           <div
             className="chat-message assistant-message"
-            aria-label="Assistant is thinking"
-            aria-live="polite"
           >
             <div className="message-role">
               Assistant
             </div>
 
             <div className="thinking-state">
-              <div className="thinking-indicator">
+              <div className="thinking-indicator" aria-hidden="true">
                 <span />
                 <span />
                 <span />

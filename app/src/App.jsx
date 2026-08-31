@@ -135,7 +135,15 @@ function MotionButton({ label = 'Send message' }) {
             className={`brain-button brain-button-${state}`}
             onClick={handleClick}
             disabled={state === 'loading'}
-            aria-live="polite"
+            aria-label={
+              state === 'loading'
+                ? 'Sending message'
+                : state === 'success'
+                  ? 'Message sent successfully'
+                  : state === 'error'
+                    ? 'Sending failed. Retry'
+                    : 'Send message'
+            }
           >
             <span className="button-content">
               {getButtonContent()}
@@ -257,7 +265,7 @@ export default function App() {
       <header className="app-top-nav" aria-label="FlyRank Studio Navigation">
         <div className="nav-brand">
           <span className="brand-dot" aria-hidden="true" />
-          <span className="brand-name">FlyRank Engineering Capstone</span>
+          <h1 className="brand-name">FlyRank Engineering Capstone</h1>
         </div>
         <nav className="nav-links" aria-label="Capstone Modules">
           <a href="#3d-studio" className="nav-link">
